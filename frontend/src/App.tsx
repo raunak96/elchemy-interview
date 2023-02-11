@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EmployeeChart from "./components/EmployeeChart";
 import EmployeeTable from "./components/EmployeeTable";
 import Header from "./components/Header";
 import Employees from "./data/EmployeeDataset.json";
@@ -49,6 +50,9 @@ function App() {
 			/>
 			{selectedTab === 0 && (
 				<EmployeeTable employees={filteredEmployees} />
+			)}
+			{selectedTab === 1 && (
+				<EmployeeChart employees={filteredEmployees} />
 			)}
 		</div>
 	);
