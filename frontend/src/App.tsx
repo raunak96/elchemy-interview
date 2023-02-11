@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EmployeeTable from "./components/EmployeeTable";
 import Employees from "./data/EmployeeDataset.json";
 
 function App() {
@@ -19,22 +20,13 @@ function App() {
 		// Finally we convert the map into array of type Employee ({location,salary})
 		return Array.from(empMap).map(([loc, emp]) => ({
 			location: loc,
-			salary: (emp.totalSalary / emp.totalEmployees).toFixed(2),
+			salary: emp.totalSalary / emp.totalEmployees,
 		}));
 	});
 	return (
 		<div className="container mx-auto p-4">
 			<div>
-				<div>
-					<span>Location</span>
-					<span>Salary</span>
-				</div>
-				{employees.map(({ location, salary }) => (
-					<div key={location}>
-						<span>{location}</span>
-						<span>{salary}</span>
-					</div>
-				))}
+				<EmployeeTable employees={employees} />
 			</div>
 		</div>
 	);

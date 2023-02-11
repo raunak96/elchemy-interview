@@ -4,5 +4,5 @@ type EmployeeMap = {
 };
 type Employee = {
 	location: string;
-	salary: string;
+	salary: number;
 };
