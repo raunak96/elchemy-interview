@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./App.css";
 import Employees from "./data/EmployeeDataset.json";
 
 function App() {
@@ -24,7 +23,7 @@ function App() {
 		}));
 	});
 	return (
-		<div className="App">
+		<div className="container mx-auto p-4">
 			<div>
 				<div>
 					<span>Location</span>
