@@ -26,18 +26,18 @@ const Header: FC<Props> = ({ onSearch, selectedTab, setSelectedTab }) => {
 	};
 
 	return (
-		<header className="flex justify-between space-x-2">
+		<header className="flex justify-between space-x-2 items-center">
 			{/* Tabs */}
 			<div className="tabs">
 				<span
-					className={`tab tab-bordered tab-lg ${
+					className={`tab tab-bordered sm:tab-lg ${
 						selectedTab === 0 ? "tab-active" : ""
 					}`}
 					onClick={e => handleTabChange(e, 0)}>
 					Table View
 				</span>
 				<span
-					className={`tab tab-bordered tab-lg ${
+					className={`tab tab-bordered sm:tab-lg ${
 						selectedTab === 1 ? "tab-active" : ""
 					}`}
 					onClick={e => handleTabChange(e, 1)}>
@@ -49,7 +49,7 @@ const Header: FC<Props> = ({ onSearch, selectedTab, setSelectedTab }) => {
 			<input
 				type="text"
 				placeholder="Search Location"
-				className="input input-accent"
+				className="input input-accent input-sm sm:input-md lg:input-lg"
 				value={location}
 				onChange={handleChange}
 			/>

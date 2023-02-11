@@ -36,12 +36,14 @@ const EmployeeChart: FC<Props> = ({ employees }) => {
 	}, [employees]);
 
 	return (
-		<Bar
-			data={data}
-			options={{
-				responsive: true,
-			}}
-		/>
+		<div className="relative h-screen sm:h-[70vh] p-2 ">
+			<Bar
+				data={data}
+				options={{
+					responsive: true,
+				}}
+			/>
+		</div>
 	);
 };
 export default EmployeeChart;
