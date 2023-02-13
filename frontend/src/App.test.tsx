@@ -4,7 +4,7 @@ import Employees from "./data/EmployeeDataset.json";
 
 test("initial render of App shows search box and Table and Two Tabs", async () => {
 	render(<App />);
-	const searchBox: HTMLInputElement = screen.getByRole("textbox");
+	const searchBox: HTMLInputElement = screen.getByRole("combobox");
 	const table: HTMLTableElement = screen.getByRole("table");
 	const barChart = screen.queryByRole("img");
 
@@ -57,23 +57,35 @@ test("Correct no of rows displayed in Table", () => {
 
 test("Search Filter working correctly for given search query", () => {
 	render(<App />);
-	const filterText = "in";
-	const searchBox: HTMLInputElement = screen.getByRole("textbox");
-	fireEvent.change(searchBox, { target: { value: filterText } });
 
-	// Input box is managed properly by state
-	expect(searchBox.value).toBe(filterText);
-
-	const rows: HTMLTableRowElement[] = screen.getAllByRole("row");
-	const employeesLocationsFiltered = Employees.reduce((acc, employee) => {
-		if (
-			!employee.location.includes(filterText) ||
-			acc.has(employee.location)
+	const allLocations = Array.from(
+		Employees.reduce(
+			(acc, employee) => acc.add(employee.location),
+			new Set<string>()
 		)
-			return acc;
-		acc.set(employee.location, true);
-		return acc;
-	}, new Map<string, boolean>());
+	);
+	const filterTexts = allLocations.slice(0, 3);
 
-	expect(rows).toHaveLength(employeesLocationsFiltered.size + 1);
+	const searchBox: HTMLInputElement = screen.getByRole("combobox");
+
+	// Select 3 locations for filtering
+	filterTexts.forEach(filterText => {
+		fireEvent.change(searchBox, { target: { value: filterText } });
+		fireEvent.keyDown(searchBox, {
+			key: "Enter",
+			code: "Enter",
+			charCode: 13,
+		});
+	});
+	filterTexts.forEach(filterText => {
+		const cell: HTMLTableCellElement = screen.getByRole("cell", {
+			name: filterText,
+			exact: false,
+		});
+		expect(cell).toBeInTheDocument();
+		expect(cell).toHaveTextContent(filterText);
+	});
+	const rows: HTMLTableRowElement[] = screen.getAllByRole("row");
+
+	expect(rows).toHaveLength(filterTexts.length + 1);
 });

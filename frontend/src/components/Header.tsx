@@ -1,23 +1,20 @@
-import {
-	type ChangeEvent,
-	useState,
-	type FC,
-	type Dispatch,
-	type MouseEvent,
-} from "react";
+import { type FC, type Dispatch, type MouseEvent } from "react";
+import ReactSelect from "react-select";
 
 type Props = {
-	onSearch: (location: string) => void;
 	selectedTab: number;
 	setSelectedTab: Dispatch<React.SetStateAction<number>>;
+	employees: Employee[];
+	selectedLocations: string[];
+	setSelectedLocations: Dispatch<React.SetStateAction<string[]>>;
 };
-const Header: FC<Props> = ({ onSearch, selectedTab, setSelectedTab }) => {
-	const [location, setLocation] = useState<string>("");
-
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setLocation(e.target.value);
-		onSearch(e.target.value);
-	};
+const Header: FC<Props> = ({
+	selectedTab,
+	setSelectedTab,
+	employees,
+	selectedLocations,
+	setSelectedLocations,
+}) => {
 	const handleTabChange = (
 		_: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>,
 		index: number
@@ -26,9 +23,9 @@ const Header: FC<Props> = ({ onSearch, selectedTab, setSelectedTab }) => {
 	};
 
 	return (
-		<header className="flex justify-between space-x-2 items-center">
+		<header className="flex justify-between space-x-2 items-center p-2">
 			{/* Tabs */}
-			<div className="tabs">
+			<div className="tabs flex-1">
 				<button
 					className={`tab tab-bordered sm:tab-lg ${
 						selectedTab === 0 ? "tab-active" : ""
@@ -46,12 +43,22 @@ const Header: FC<Props> = ({ onSearch, selectedTab, setSelectedTab }) => {
 			</div>
 
 			{/* Search Box */}
-			<input
-				type="text"
-				placeholder="Search Location"
-				className="input input-accent input-sm sm:input-md lg:input-lg"
-				value={location}
-				onChange={handleChange}
+			<ReactSelect
+				className="flex-1 z-40"
+				isMulti
+				value={selectedLocations.map(loc => ({
+					label: loc,
+					value: loc,
+				}))}
+				options={employees.map(tag => ({
+					value: tag.location,
+					label: tag.location,
+				}))}
+				onChange={tags => {
+					setSelectedLocations(tags.map(tag => tag.value));
+				}}
+				placeholder="Filter By Location"
+				defaultMenuIsOpen
 			/>
 		</header>
 	);

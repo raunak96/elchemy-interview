@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import EmployeeChart from "./components/EmployeeChart";
 import EmployeeTable from "./components/EmployeeTable";
 import Header from "./components/Header";
@@ -7,25 +7,21 @@ import { transformData } from "./utils";
 function App() {
 	const [employees] = useState<Employee[]>(transformData);
 	const [selectedTab, setSelectedTab] = useState<number>(0);
-	const [filteredEmployees, setFilteredEmployees] =
-		useState<Employee[]>(employees);
+	const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
-	const onSearch = (location: string) => {
-		if (location === "") {
-			setFilteredEmployees(employees);
-			return;
-		}
-		setFilteredEmployees(
-			employees.filter(emp =>
-				emp.location.toLowerCase().includes(location.toLowerCase())
-			)
+	const filteredEmployees: Employee[] = useMemo(() => {
+		if (selectedLocations.length === 0) return employees;
+		return employees.filter(emp =>
+			selectedLocations.includes(emp.location)
 		);
-	};
+	}, [employees, selectedLocations]);
 
 	return (
 		<div className="container mx-auto p-4 flex flex-col space-y-5 h-screen">
 			<Header
-				onSearch={onSearch}
+				employees={employees}
+				selectedLocations={selectedLocations}
+				setSelectedLocations={setSelectedLocations}
 				selectedTab={selectedTab}
 				setSelectedTab={setSelectedTab}
 			/>
