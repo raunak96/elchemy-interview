@@ -14,11 +14,11 @@
 
 ## Libraries Used
 1. UI - React.ts
-2. Styling - Tailwindcss
-3. UI Components (for table,tabs) - [DaisyUI](https://daisyui.com/) - Tailwindcss based component library
-4. State Management - React State and Props (no prop drilling, hence Global State Management library not used)
-5. Charting - [React Chartjs 2](https://github.com/reactchartjs/react-chartjs-2).
-6. Testing - React Testing Library
+2. Styling - Tailwindcss and [DaisyUI](https://daisyui.com/) for Tailwind based components like table, tab
+3. State Management - React State and Props (no prop drilling, hence Global State Management library not used)
+4. Charting - [React Chartjs 2](https://github.com/reactchartjs/react-chartjs-2).
+5. Testing - React Testing Library
+6. SearchBox - [React Select Library](https://react-select.com/home) - Since already had tailwindcss style setup, did not use Material UI component as it will also install other dependencies which are not really needed.
 
 ## Installation
 1. Clone the repository:
@@ -36,15 +36,16 @@
 ```
 
 ## Implementation Logic
-1. *Transforming Employee Dataset to usable form:* [Refer](src/utils.ts#L6)
+1. *Transforming Employee Dataset to usable form:* [Refer](frontend/src/utils.ts#L6)
    -  First converted dataset to a Map<String,Object> where key is `Location` and value is an Object having `total employees` and `total salary` for that location.
    -  Finally, the map is converted to an array of objects of the form {location, salary} where salary is `mean` salary we get by:
     ```javascript
         salary = total salary/total employees
     ``` 
-2. *Search By Location:*
-   - For searching, `sub-string` logic is used using `includes` javascript method i.e if search query is substring of location, it is selected.
-   - The search input box is a `controlled` component (using react state). When user types in search box, `onChange` event is triggered where apart from setting the value of input box, `onSearch` method passed as props to it also runs which simply filters the employee by search query and stores it in state which is passed as `props` to both `Bar Chart` and `Table` as employees data. Please refer [App.tsx](src/App.tsx#L27) and [Header.tsx](src/components/Header.tsx#L49)
+2. *Search By Location:* 
+ - Used `ReactSelect` component provided by `react-select` library which allows to select multiple filters at same time (in our case `locations`).[Refer](frontend/src/components/Header.tsx#L46)
+ - If no locations are selected, we show table/chart view for all locations.
+ - Whenever one or more locations are selected, we filter out employee data for those locations only and display them. [Refer](frontend/src/App.tsx#L12).
 
 ## Running tests
 - Run the following command to test the App:

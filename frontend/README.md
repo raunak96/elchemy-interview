@@ -43,7 +43,7 @@
         salary = total salary/total employees
     ``` 
 2. *Search By Location:* 
- - Used `ReactSelect` component provided by `react-select` library which allows to select multiple filters at same time (in our case `locations`).
+ - Used `ReactSelect` component provided by `react-select` library which allows to select multiple filters at same time (in our case `locations`). [Refer](src/components/Header.tsx#L46)
  - If no locations are selected, we show table/chart view for all locations.
  - Whenever one or more locations are selected, we filter out employee data for those locations only and display them. [Refer](src/App.tsx#L12).
 
