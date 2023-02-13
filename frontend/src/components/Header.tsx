@@ -58,7 +58,6 @@ const Header: FC<Props> = ({
 					setSelectedLocations(tags.map(tag => tag.value));
 				}}
 				placeholder="Filter By Location"
-				defaultMenuIsOpen
 			/>
 		</header>
 	);
