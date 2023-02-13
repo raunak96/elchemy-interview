@@ -29,20 +29,20 @@ const Header: FC<Props> = ({ onSearch, selectedTab, setSelectedTab }) => {
 		<header className="flex justify-between space-x-2 items-center">
 			{/* Tabs */}
 			<div className="tabs">
-				<span
+				<button
 					className={`tab tab-bordered sm:tab-lg ${
 						selectedTab === 0 ? "tab-active" : ""
 					}`}
 					onClick={e => handleTabChange(e, 0)}>
 					Table View
-				</span>
-				<span
+				</button>
+				<button
 					className={`tab tab-bordered sm:tab-lg ${
 						selectedTab === 1 ? "tab-active" : ""
 					}`}
 					onClick={e => handleTabChange(e, 1)}>
 					Chart View
-				</span>
+				</button>
 			</div>
 
 			{/* Search Box */}

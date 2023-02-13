@@ -6,6 +6,7 @@
 - [Installation](#installation)
 - [Running the project](#running-the-project)
 - [Implementation Logic](#implementation-logic)
+- [Running tests](#running-tests)
 
 ## Introduction
 - This is a Single Page React Application displaying an employee dataset in Table as well as Chart View where the salary is aggregated by `location`. (Aggregation used is `Mean` of Salary).
@@ -17,6 +18,7 @@
 3. UI Components (for table,tabs) - [DaisyUI](https://daisyui.com/) - Tailwindcss based component library
 4. State Management - React State and Props (no prop drilling, hence Global State Management library not used)
 5. Charting - [React Chartjs 2](https://github.com/reactchartjs/react-chartjs-2).
+6. Testing - React Testing Library
 
 ## Installation
 1. Clone the repository:
@@ -43,3 +45,12 @@
 2. *Search By Location:*
    - For searching, `sub-string` logic is used using `includes` javascript method i.e if search query is substring of location, it is selected.
    - The search input box is a `controlled` component (using react state). When user types in search box, `onChange` event is triggered where apart from setting the value of input box, `onSearch` method passed as props to it also runs which simply filters the employee by search query and stores it in state which is passed as `props` to both `Bar Chart` and `Table` as employees data. Please refer [App.tsx](src/App.tsx#L27) and [Header.tsx](src/components/Header.tsx#L49)
+
+## Running tests
+- Run the following command to test the App:
+  ```bash
+    npm run test
+  ```
+- Written Tests using `React Testing Library`.
+- Since, it is a simple App with no routing and other complexities like API call/server interactions just did a simple component testing using this library.
+- For end-to-end test for complex app, can use library like `Cypress`.
