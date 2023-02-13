@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+## Table of Contents
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- [Table of Contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Libraries Used](#libraries-used)
+- [Installation](#installation)
+- [Running the project](#running-the-project)
+- [Implementation Logic](#implementation-logic)
 
-## Available Scripts
+## Introduction
+- This is a Single Page React Application displaying an employee dataset in Table as well as Chart View where the salary is aggregated by `location`. (Aggregation used is `Mean` of Salary).
+- The application also has `search` capability where only those locations matching the search query are shown. If search box empty, then all locations are shown in both table and chart.
 
-In the project directory, you can run:
+## Libraries Used
+1. UI - React.ts
+2. Styling - Tailwindcss
+3. UI Components (for table,tabs) - [DaisyUI](https://daisyui.com/) - Tailwindcss based component library
+4. State Management - React State and Props (no prop drilling, hence Global State Management library not used)
+5. Charting - [React Chartjs 2](https://github.com/reactchartjs/react-chartjs-2).
 
-### `npm start`
+## Installation
+1. Clone the repository:
+```bash
+    git clone https://github.com/raunak96/elchemy-interview
+```
+2. Install the dependencies
+```bash
+    npn install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Running the project
+```bash
+    npm run start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Implementation Logic
+1. *Transforming Employee Dataset to usable form:* [Refer](src/utils.ts#L6)
+   -  First converted dataset to a Map<String,Object> where key is `Location` and value is an Object having `total employees` and `total salary` for that location.
+   -  Finally, the map is converted to an array of objects of the form {location, salary} where salary is `mean` salary we get by:
+    ```javascript
+        salary = total salary/total employees
+    ``` 
+2. *Search By Location:*
+   - For searching, `sub-string` logic is used using `includes` javascript method i.e if search query is substring of location, it is selected.
+   - The search input box is a `controlled` component (using react state). When user types in search box, `onChange` event is triggered where apart from setting the value of input box, `onSearch` method passed as props to it also runs which simply filters the employee by search query and stores it in state which is passed as `props` to both `Bar Chart` and `Table` as employees data. Please refer [App.tsx](src/App.tsx#L27) and [Header.tsx](src/components/Header.tsx#L49)

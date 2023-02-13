@@ -1,34 +1,45 @@
-# Bizinbiz React Interview Exercise
+## Table of Contents
 
-## What to expect?
-We understand that your time is valuable, and in anyone's busy schedule solving these exercises may constitute a fairly substantial chunk of time, so we really appreciate any effort you put in to helping us build a solid team.
+- [Table of Contents](#table-of-contents)
+- [Introduction](#introduction)
+- [Libraries Used](#libraries-used)
+- [Installation](#installation)
+- [Running the project](#running-the-project)
+- [Implementation Logic](#implementation-logic)
 
-## What we are looking for?
-**Keep it simple**. Read the requirements and restrictions carefully and focus on solving the problem.
+## Introduction
+- This is a Single Page React Application displaying an employee dataset in Table as well as Chart View where the salary is aggregated by `location`. (Aggregation used is `Mean` of Salary).
+- The application also has `search` capability where only those locations matching the search query are shown. If search box empty, then all locations are shown in both table and chart.
 
-**Treat it like production code**. That is, develop your software in the same way that you would for any code that is intended to be deployed to production. These may be toy exercises, but we really would like to get an idea of how you build code on a day-to-day basis. Do not try to overdo things by focussing too much on the design aspect. Keep in mind that you will be evaluated mainly on the basis on functionalities.
+## Libraries Used
+1. UI - React.ts
+2. Styling - Tailwindcss
+3. UI Components (for table,tabs) - [DaisyUI](https://daisyui.com/) - Tailwindcss based component library
+4. State Management - React State and Props (no prop drilling, hence Global State Management library not used)
+5. Charting - [React Chartjs 2](https://github.com/reactchartjs/react-chartjs-2).
 
-## How to submit?
-You can push the source code to your GitHub profile and provide us a link to see through it. Even better if you can upload it as a Netlify or Heroku (or any other) web app. Make sure your submission includes a small **README**, documenting any assumptions, simplifications and/or choices you made, as well as a short description of how to run the code and/or tests. Finally, to help us review your code, **please** split your commit history in sensible chunks (at least separate the initial provided code from your personal additions).
+## Installation
+1. Clone the repository:
+```bash
+    git clone https://github.com/raunak96/elchemy-interview
+```
+2. Install the dependencies
+```bash
+    npn install
+```
 
-## The Interview:
-After you submit your code, we will contact you to discuss and potentially arrange an in-person interview with some of the team. We will also take the opportunity to step through your submitted code with you.
+## Running the project
+```bash
+    npm run start
+```
 
-## The Exercises:
-
-### 1. [Frontend] Build a SPA that displays employee data
-The complete specification for this exercise can be found in the [EmployeeData.md].
-
-## F.A.Q.
-1) _Is it OK to share your solutions publicly?_
-Yes, the questions are not prescriptive, the process and discussion around the code is the valuable part. You do the work, you own the code. Given we are asking you to give up your time, it is entirely reasonable for you to keep and use your solution as you see fit.
-
-2) _Should I do X?_
-For any value of X, it is up to you, we intentionally leave the problem a little open-ended and will leave it up to you to provide us with what you see as important. Just remember to keep it simple. If it's a feature that is going to take you a couple of days, it's not essential.
-
-3) _Something is ambiguous, and I don't know what to do?_
-The first thing is: don't get stuck. We really don't want to trip you up intentionally, we are just attempting to see how you approach problems. That said, there are intentional ambiguities in the specifications, mainly to see how you fill in those gaps, and how you make design choices.
-
-Good luck!
-
-DISCLAIMER: This exercise was shamelessly copied from the Panalyt Interview exercise as it was well written and the quality of the team that was built at Panalyt reflected the effort put into the hiring process.
+## Implementation Logic
+1. *Transforming Employee Dataset to usable form:* [Refer](src/utils.ts#L6)
+   -  First converted dataset to a Map<String,Object> where key is `Location` and value is an Object having `total employees` and `total salary` for that location.
+   -  Finally, the map is converted to an array of objects of the form {location, salary} where salary is `mean` salary we get by:
+    ```javascript
+        salary = total salary/total employees
+    ``` 
+2. *Search By Location:*
+   - For searching, `sub-string` logic is used using `includes` javascript method i.e if search query is substring of location, it is selected.
+   - The search input box is a `controlled` component (using react state). When user types in search box, `onChange` event is triggered where apart from setting the value of input box, `onSearch` method passed as props to it also runs which simply filters the employee by search query and stores it in state which is passed as `props` to both `Bar Chart` and `Table` as employees data. Please refer [App.tsx](src/App.tsx#L27) and [Header.tsx](src/components/Header.tsx#L49)
