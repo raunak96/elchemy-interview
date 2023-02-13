@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { formatter } from "../utils";
+import { convertToUSD } from "../utils";
 
 type Props = {
 	employees: Employee[];
@@ -19,7 +19,7 @@ const EmployeeTable: FC<Props> = ({ employees }) => {
 				{employees.map(({ location, salary }) => (
 					<tr key={location}>
 						<td>{location}</td>
-						<td>{formatter.format(salary)}</td>
+						<td>{convertToUSD(salary)}</td>
 					</tr>
 				))}
 			</tbody>

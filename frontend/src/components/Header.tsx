@@ -19,7 +19,7 @@ const Header: FC<Props> = ({ onSearch, selectedTab, setSelectedTab }) => {
 		onSearch(e.target.value);
 	};
 	const handleTabChange = (
-		e: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>,
+		_: MouseEvent<HTMLSpanElement, globalThis.MouseEvent>,
 		index: number
 	) => {
 		setSelectedTab(index);
